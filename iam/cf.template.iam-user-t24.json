@@ -1,0 +1,94 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "IAM User for T24 access template",
+	"Resources": {
+		"bankDev0": {
+			"Type": "AWS::IAM::User",
+			"Properties": {
+				"UserName": "bankDev",
+				"ManagedPolicyArns": [
+					{"Ref": "GetSecretDepServiceAlogent"},
+					{"Ref": "GetSecretBLAPIEspear"},
+					{"Ref": "getSecretBLAPIEfs"},
+					{"Ref": "GetSecretBLAPIEspear1"}
+				]				
+			}
+		},
+		"GetSecretDepServiceAlogent": {
+			"Type": "AWS::IAM::ManagedPolicy",
+			"Properties": {
+				"ManagedPolicyName" : "GetSecretDepService_Alogent",
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"secretsmanager:GetSecretValue",
+								"secretsmanager:DescribeSecret"
+							],
+							"Resource": { "Fn::Sub" : "arn:aws:secretsmanager:us-east-1:${AWS::AccountId}:secret:bastille/app/depositService/alogent*" }
+						}
+					]
+				}
+			}
+		},
+		"GetSecretBLAPIEspear": {
+			"Type": "AWS::IAM::ManagedPolicy",
+			"Properties": {
+				"ManagedPolicyName": "GetSecretBLAPI_Espear",
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"secretsmanager:GetSecretValue",
+								"secretsmanager:DescribeSecret"
+							],
+							"Resource": { "Fn::Sub" : "arn:aws:secretsmanager:us-east-1:${AWS::AccountId}:secret:bastille/app/businesslogicapi/Espear*"}
+						}
+					]
+				}
+			}
+		},
+		"getSecretBLAPIEfs": {
+			"Type": "AWS::IAM::ManagedPolicy",
+			"Properties": {
+				"ManagedPolicyName": "GetSecretBLAPI_EFS",
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"secretsmanager:GetSecretValue",
+								"secretsmanager:DescribeSecret"
+							],
+							"Resource": { "Fn::Sub" : "arn:aws:secretsmanager:us-east-1:${AWS::AccountId}:secret:bastille/app/businesslogicapi/EFS*"}
+						}
+					]
+				}
+			}
+		},
+		"GetSecretBLAPIEspear1": {
+			"Type": "AWS::IAM::ManagedPolicy",
+			"Properties": {
+				"ManagedPolicyName": "GetSecretBLAPI_Espear1",
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"secretsmanager:GetSecretValue",
+								"secretsmanager:DescribeSecret"
+							],
+							"Resource": { "Fn::Sub" : "arn:aws:secretsmanager:us-east-1:${AWS::AccountId}:secret:bastille/app/businesslogicapi/Espear1*"}
+						}
+					]
+				}
+			}
+		}
+	}
+}

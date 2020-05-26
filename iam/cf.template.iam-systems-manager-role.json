@@ -1,0 +1,36 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Systems Manager Role template",
+    "Resources": {
+        "AWSSystemsManagerRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "SystemsManagerRole",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+						  "Effect": "Allow",
+						  "Principal": {
+							"Service": "ec2.amazonaws.com"
+						  },
+						  "Action": "sts:AssumeRole"
+						}
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+                ]
+             }
+        },
+		"SystemsManagerprofile": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "InstanceProfileName": "SystemsManagerRole",
+                "Roles": [ {
+                    "Ref": "AWSSystemsManagerRole"
+                 } ]
+            }
+        }
+    }
+}
